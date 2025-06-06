@@ -1,6 +1,4 @@
-import {createRoot} from 'react-dom/client'
-
-"use client"
+"use client";
 
 import type React from "react"
 
@@ -173,9 +171,4 @@ export default function RegisterPage() {
       </Card>
     </div>
   )
-}
-
-
-if(document.getElementById('RegisterPage')){
-  createRoot(document.getElementById('RegisterPage')).render(<RegisterPage/>);
 }

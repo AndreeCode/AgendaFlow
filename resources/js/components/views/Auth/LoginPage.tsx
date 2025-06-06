@@ -4,8 +4,6 @@ import type React from "react"
 
 import { useState } from "react"
 
-import {createRoot} from 'react-dom/client';
-
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -108,8 +106,4 @@ export default function LoginPage() {
       </Card>
     </div>
   )
-}
-
-if(document.getElementById('LoginPage')){
-  createRoot(document.getElementById('LoginPage')).render(<LoginPage/>);
 }
