@@ -52,10 +52,13 @@ class AuthController extends Controller
         ], 401);
     }
 
-    public function logout(Request $request){
-        $request->user()->cusrrentAccesToken()->delete();
-        return response()->json([
-            'msg'=>"logout",
-        ],200 );
+    public function logout(){
+        $response=['succes'=>false];
+        auth()->user()->currentAccessToken()->delete();
+        $response=[
+            'succes'=>true,
+            "message"=>"Sesion cerrada"
+        ];
+        return response()->json($response,200 );
     }
 }

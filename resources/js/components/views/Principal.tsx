@@ -97,7 +97,7 @@ export default function Principal() {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Calendar className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">CitasPro</span>
+            <span className="text-2xl font-bold text-gray-900">AgendaFlow</span>
           </div>
           <div className="space-x-4">
             <Button variant="ghost" asChild>
