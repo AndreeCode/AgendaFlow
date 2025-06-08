@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import {useEffect} from 'react';
 
 import { useState } from "react"
 
@@ -10,15 +11,33 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar, ArrowLeft } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import AuthUser from "@/Auth/AuthUser";
+import config from "@/config";
 
 export default function LoginPage() {
+  const {getToken}=AuthUser();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [role, setRole] = useState("")
+  const [message, setMessage] = useState("")
+  const navigate=useNavigate();
 
+  useEffect(()=>{
+    if(getToken()){
+      navigate("/")
+    }
+  },[]);
 
-  const handleLogin = (e: React.FormEvent) => {
-    
+ const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    config.getLogin({email,password})
+    .then(({data})=>{
+      if(data.success){
+        console.log(data);
+      }else{
+        console.log(data);
+      }
+    });
   }
 
   return (

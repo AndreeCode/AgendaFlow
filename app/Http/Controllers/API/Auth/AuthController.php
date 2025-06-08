@@ -38,10 +38,12 @@ class AuthController extends Controller
             $user = auth()->user();
 
             $response = [
-                'success' => true,
+                
                 'user' => $user,
                 'roles'=>$user->getRoleNames(),
-                'token' => $user->createToken('appToken')->plainTextToken
+                'message'=>"logueado",
+                'token' => $user->createToken('appToken')->plainTextToken,
+                'success' => true,
             ];
 
             return response()->json($response, 200);
@@ -50,7 +52,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Credenciales incorrectas',
             'success' => false,
-        ], 401);
+        ], 200);
     }
 
     public function logout(){

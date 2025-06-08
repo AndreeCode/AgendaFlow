@@ -8,8 +8,12 @@ import {createRoot} from 'react-dom/client';
 import Main from '@/components/views/Principal';
 import Login from '@/components/views/Auth/LoginPage'
 import Register from '@/components/views/Auth/RegisterPage'
-import Dashboard from '@/components/views/Dashboard/DashboardRoot';
-
+import ProtectedRoutes from '@/Auth/ProtectedRoutes';
+import AdminDashboard from '@/components/views/Dashboard/AdminDashboard';
+import HomePage from '@/components/views/Dashboard/Dashboard/HomePage';
+import EmployeeDashboard from '@/components/views/Dashboard/employeeDashboard';
+import ClientDashboard from '@/components/views/Dashboard/ClientDashboard';
+import AdminPage from '@/components/views/Dashboard/Dashboard/AdminPage';
 
 export default function App(){
     const [loading, setLoading] =useState(null);
@@ -17,14 +21,26 @@ export default function App(){
     if (loading) return <div>Cargando...</div>
     return (
         <BrowserRouter>
-        <Routes>
-            <Route path="/" element={<Main/>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<Dashboard />} />
-            
-            <Route path="*" element={<h1>404</h1>} />
-        </Routes>
+            <Routes>
+                <Route path="/" element={<Main/>} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
+
+                <Route element={<ProtectedRoutes/>}>
+                    <Route path='/admin' element={<AdminDashboard/>}>
+                        <Route index element={<AdminPage/>}></Route>
+                    </Route>
+                    <Route path='/client' element={<ClientDashboard/>}>
+                        <Route index element={<HomePage/>}></Route>
+                    </Route>
+                    <Route path='/employee' element={<EmployeeDashboard/>}>
+                        <Route index element={<HomePage/>}></Route>
+                    </Route>
+                </Route>
+                
+                <Route path="*" element={<h1>404</h1>} />
+            </Routes>
         </BrowserRouter>
     )
 }
