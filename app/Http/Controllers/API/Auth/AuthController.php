@@ -19,11 +19,11 @@ class AuthController extends Controller
         $input['password']=Hash::make( $input['password']);
         
         $user=User::create($input);
+        $user->assignRole('client');
 
         
         return response()->json([
-            'user'=>$user,
-            'token'=>$user->createToken('appToken')->plainTextToken,
+            "message"=>"Cuenta creada correctamente"
         ],200);    
     }
     
@@ -38,8 +38,9 @@ class AuthController extends Controller
             $user = auth()->user();
 
             $response = [
-                'user' => $user,
                 'success' => true,
+                'user' => $user,
+                'roles'=>$user->getRoleNames(),
                 'token' => $user->createToken('appToken')->plainTextToken
             ];
 
