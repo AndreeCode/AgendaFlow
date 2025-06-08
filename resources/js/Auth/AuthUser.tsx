@@ -14,36 +14,36 @@ export default function AuthUser(){
         return token;
     }
     const getUser=()=>{
-        const tokenString=sessionStorage.getItem('user');
-        const token=JSON.parse(tokenString);
-        return token;
+        const userString=sessionStorage.getItem('user');
+        const user=JSON.parse(userString);
+        return user;
     }
     const getRole=()=>{
-        const tokenString=sessionStorage.getItem('rol');
-        const token=JSON.parse(tokenString);
-        return token;
+        const roleString=sessionStorage.getItem('role');
+        const role=JSON.parse(roleString);
+        return role;
     }
  
     const [token,setToken]=useState(getToken());
     const [user,setUser]=useState(getUser());
-    const [rol,setRole]=useState(getRole());
+    const [role,setRole]=useState(getRole());
 
-    const saveToken=(user, token,rol)=>{
+    const saveToken=(user, token,role)=>{
         sessionStorage.setItem('user',JSON.stringify(user));
         sessionStorage.setItem('token',JSON.stringify(token));
-        sessionStorage.setItem('rol',JSON.stringify(rol));
+        sessionStorage.setItem('role',JSON.stringify(role));
 
         setUser(user);
         setToken(token);
-        setRole(rol);
+        setRole(role);
 
-        if(getRole()=="admin"){
+        if(getRole()==="admin"){
             navigate("/admin");
         }
-        if(getRole()=="employee"){
+        if(getRole()==="employee"){
             navigate("/employee");
         }
-        if(getRole()=="client"){
+        if(getRole()==="client"){
             navigate("/client");
         }
 
@@ -57,7 +57,7 @@ export default function AuthUser(){
         setToken:saveToken,
         token,
         user,
-        rol,
+        role,
         getToken,getRole,getUser,getLogout
     };
 }

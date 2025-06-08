@@ -1,9 +1,8 @@
 "use client"
 
 import type React from "react"
-import {useEffect} from 'react';
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,7 +15,7 @@ import AuthUser from "@/Auth/AuthUser";
 import config from "@/config";
 
 export default function LoginPage() {
-  const {getToken}=AuthUser();
+  const {setToken, getToken}=AuthUser();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
@@ -24,7 +23,7 @@ export default function LoginPage() {
 
   useEffect(()=>{
     if(getToken()){
-      navigate("/")
+      navigate("/admin")
     }
   },[]);
 
@@ -33,9 +32,14 @@ export default function LoginPage() {
     config.getLogin({email,password})
     .then(({data})=>{
       if(data.success){
-        console.log(data);
+        //console.log(data);
+        setToken(
+          data.user,
+          data.token,
+          data.user.roles[0].name
+        );
       }else{
-        console.log(data);
+        setMessage(data.message);
       }
     });
   }
