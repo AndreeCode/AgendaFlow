@@ -14,6 +14,7 @@ import HomePage from '@/components/views/Dashboard/Dashboard/HomePage';
 import EmployeeDashboard from '@/components/views/Dashboard/employeeDashboard';
 import ClientDashboard from '@/components/views/Dashboard/ClientDashboard';
 import AdminPage from '@/components/views/Dashboard/Dashboard/AdminPage';
+import EmployeePage from '@/components/views/Dashboard/Dashboard/EmployeePage';
 
 export default function App(){
     const [loading, setLoading] =useState(null);
@@ -35,7 +36,7 @@ export default function App(){
                         <Route index element={<HomePage/>}></Route>
                     </Route>
                     <Route path='/employee' element={<EmployeeDashboard/>}>
-                        <Route index element={<HomePage/>}></Route>
+                        <Route index element={<EmployeePage/>}></Route>
                     </Route>
                 </Route>
                 

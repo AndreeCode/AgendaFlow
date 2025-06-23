@@ -28,6 +28,8 @@ export default function AuthUser(){
     const [user,setUser]=useState(getUser());
     const [role,setRole]=useState(getRole());
 
+    
+
     const saveToken=(user, token,role)=>{
         sessionStorage.setItem('user',JSON.stringify(user));
         sessionStorage.setItem('token',JSON.stringify(token));
@@ -37,17 +39,23 @@ export default function AuthUser(){
         setToken(token);
         setRole(role);
 
-        if(getRole()==="admin"){
-            navigate("/admin");
-        }
-        if(getRole()==="employee"){
-            navigate("/employee");
-        }
-        if(getRole()==="client"){
-            navigate("/client");
-        }
+        redirectRole(getRole());
 
     }
+
+    const redirectRole=(role:String)=>{
+        if(role==="admin"){
+
+            navigate("/admin");
+        }
+        if(role==="employee"){
+            navigate("/employee");
+        }
+        if(role==="client"){
+            navigate("/client");
+        }
+    }
+
     const getLogout=()=>{
         sessionStorage.clear();
         navigate("/login");
@@ -58,6 +66,7 @@ export default function AuthUser(){
         token,
         user,
         role,
-        getToken,getRole,getUser,getLogout
+        getToken,getRole,getUser,getLogout,
+        redirectRole
     };
 }

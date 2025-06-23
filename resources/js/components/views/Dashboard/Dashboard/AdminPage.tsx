@@ -30,9 +30,12 @@ import {
   BarChart3,
   Settings,
 } from "lucide-react"
+import AuthUser from "@/Auth/AuthUser"
+import Config from "@/Config"
 
 export default function AdminPage(){
 
+  const {getLogout, getToken}=AuthUser();
   const [activeTab, setActiveTab] = useState("calendar")
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false)
   const [userManagementModalOpen, setUserManagementModalOpen] = useState(false)
@@ -45,7 +48,21 @@ export default function AdminPage(){
   }, [])
 
   const handleLogout = () => {
-    
+    Config.getLogout().then(response=>{
+      getLogout();
+    });
+  }
+  const renderLinks =()=>{
+    if(getToken()){
+      return (
+        <>
+          <Button variant="outline" onClick={handleLogout}>
+                <LogOut className="h-4 w-4 mr-2" />
+                Cerrar Sesión
+          </Button>
+        </>
+      );
+    }
   }
 
   const handleOpenModal = (modal: string) => {
@@ -134,10 +151,7 @@ export default function AdminPage(){
                 <Settings className="h-4 w-4 mr-2" />
                 Configuración
               </Button>
-              <Button variant="outline" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Cerrar Sesión
-              </Button>
+              {renderLinks()}
             </div>
           </div>
         </header>

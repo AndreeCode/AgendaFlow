@@ -1,2 +1,3 @@
 import './bootstrap';
-import './components/views/Principal';
+import './routes/index';
+

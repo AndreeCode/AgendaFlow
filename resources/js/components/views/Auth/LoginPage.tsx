@@ -12,10 +12,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar, ArrowLeft } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import AuthUser from "@/Auth/AuthUser";
-import config from "@/config";
+import config from "@/Config";
+import axios from "axios"
 
 export default function LoginPage() {
-  const {setToken, getToken}=AuthUser();
+  const {setToken, getToken,getRole,redirectRole}=AuthUser();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [message, setMessage] = useState("")
@@ -23,25 +24,30 @@ export default function LoginPage() {
 
   useEffect(()=>{
     if(getToken()){
-      navigate("/admin")
+
+      redirectRole(getRole());
+      
     }
   },[]);
 
  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    config.getLogin({email,password})
-    .then(({data})=>{
-      if(data.success){
-        //console.log(data);
-        setToken(
-          data.user,
-          data.token,
-          data.user.roles[0].name
-        );
-      }else{
-        setMessage(data.message);
-      }
+    await axios.get('/sanctum/csrf-cookie').then((response)=>{
+      config.getLogin({email,password})
+          .then((data)=>{
+            if(data.data.success){
+              //console.log(data);
+              setToken(
+                data.data.user,
+                data.data.token,
+                data.data.user.roles[0].name
+              );
+            }else{
+              setMessage(data.data.message);
+            }
+          });
     });
+    
   }
 
   return (

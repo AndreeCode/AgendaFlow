@@ -8,7 +8,7 @@
 
 @section('libs')
     @viteReactRefresh
-    @vite(['resources/js/routes/index.tsx','resources/css/app.css'])
+    @vite(['resources/js/app.js','resources/css/app.css'])
 @endsection
 
 
