@@ -25,22 +25,39 @@ import {
   BarChart3,
   Settings,
 } from "lucide-react"
+import Config from "@/Config"
+import AuthUser from "@/Auth/AuthUser"
 
 export default function EmployeeDashboard() {
+   const {getToken,getLogout}=AuthUser();
   const [user, setUser] = useState<any>(null)
   const [activeTab, setActiveTab] = useState("calendar")
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false)
   const [statisticsModalOpen, setStatisticsModalOpen] = useState(false)
   const [settingsModalOpen, setSettingsModalOpen] = useState(false)
-  
+ 
 
   useEffect(() => {
     
   },)
 
   const handleLogout = () => {
-   
-  }
+        Config.getLogout().then(response=>{
+          getLogout();
+        });
+      }
+      const renderLinks =()=>{
+        if(getToken()){
+          return (
+            <>
+              <Button variant="outline" onClick={handleLogout}>
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Cerrar Sesión
+              </Button>
+            </>
+          );
+        }
+      }
 
   const handleOpenModal = (modal: string) => {
     switch (modal) {
@@ -124,10 +141,7 @@ export default function EmployeeDashboard() {
                 <Settings className="h-4 w-4 mr-2" />
                 Configuración
               </Button>
-              <Button variant="outline" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Cerrar Sesión
-              </Button>
+              {renderLinks()}
             </div>
           </div>
         </header>

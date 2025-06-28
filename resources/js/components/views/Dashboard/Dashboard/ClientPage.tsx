@@ -15,8 +15,11 @@ import { AppSidebarClient } from "@/components/layouts/app-sidebar-client"
 import { AppointmentModal } from "@/components/layouts/modals/appointment-modal"
 import { SettingsModal } from "@/components/layouts/modals/settings-modal"
 import { User, CalendarIcon, Clock, MapPin, Star, LogOut, Plus, Search, Heart, Settings } from "lucide-react"
+import Config from "@/Config"
+import AuthUser from "@/Auth/AuthUser"
 
 export default function ClientDashboard() {
+    const {getLogout, getToken}=AuthUser();
   const [user, setUser] = useState<any>(null)
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [activeTab, setActiveTab] = useState("appointments")
@@ -29,9 +32,22 @@ export default function ClientDashboard() {
   }, )
 
   const handleLogout = () => {
-    
-  
-  }
+      Config.getLogout().then(response=>{
+        getLogout();
+      });
+    }
+    const renderLinks =()=>{
+      if(getToken()){
+        return (
+          <>
+            <Button variant="outline" onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-2" />
+                  Cerrar Sesión
+            </Button>
+          </>
+        );
+      }
+    }
 
   const handleOpenModal = (modal: string) => {
     switch (modal) {
@@ -177,10 +193,7 @@ export default function ClientDashboard() {
                 <Settings className="h-4 w-4 mr-2" />
                 Configuración
               </Button>
-              <Button variant="outline" onClick={handleLogout}>
-                <LogOut className="h-4 w-4 mr-2" />
-                Cerrar Sesión
-              </Button>
+              {renderLinks()}
             </div>
           </div>
         </header>
