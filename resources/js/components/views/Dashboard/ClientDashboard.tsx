@@ -15,7 +15,6 @@ export default function ClientDashboard(){
         },[]);
     return (
         <div>
-            <h1>client</h1>
             <Outlet/>
         </div>
     );

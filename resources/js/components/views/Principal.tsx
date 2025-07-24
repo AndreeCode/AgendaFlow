@@ -1,421 +1,313 @@
-"use client"
-
-import React from 'react';
-
+import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, Users, Shield, CheckCircle, Star, ArrowRight } from "lucide-react"
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import {
+  Menu, Scissors, ScissorsIcon,
+  SprayCan,
+  Users,
+  Calendar,
+  Clock,
+  Star,
+  Gift,
+} from "lucide-react"
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+} from "@/components/ui/card";
 
 
-export default function Principal() {
-  // Citas de ejemplo para el calendario
-  
-  const upcomingAppointments = [
+export default function Component() {
+  const servicios = [
     {
-      id: 1,
-      client: "Ana García",
-      service: "Corte de Cabello",
-      time: "09:00",
-      date: "Hoy",
-      employee: "María López",
-      status: "confirmed",
+      icon: <Scissors className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Cortes y Peinados",
+      description: "Estilo para todas las edades. Clásicos o modernos, tú eliges.",
     },
     {
-      id: 2,
-      client: "Carlos Pérez",
-      service: "Masaje Relajante",
-      time: "14:30",
-      date: "Hoy",
-      employee: "Dr. Rodríguez",
-      status: "pending",
+      icon: <SprayCan className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Coloración y Mechas",
+      description: "Tintes, mechas y más para renovar tu look.",
     },
     {
-      id: 3,
-      client: "Laura Martín",
-      service: "Manicure",
-      time: "16:00",
-      date: "Mañana",
-      employee: "Sofia Chen",
-      status: "confirmed",
+      icon: <Users className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Tratamientos Capilares",
+      description: "Cuida tu cabello con hidratación, nutrición y brillo.",
     },
     {
-      id: 4,
-      client: "Juan Silva",
-      service: "Limpieza Dental",
-      time: "10:00",
-      date: "Mañana",
-      employee: "Dr. Hernández",
-      status: "confirmed",
+      icon: <Calendar className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Reserva Online Fácil",
+      description: "Agenda tu cita desde cualquier lugar, en segundos.",
     },
-  ]
+    {
+      icon: <Clock className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Recordatorios de Cita",
+      description: "Recibe alertas automáticas por email o celular.",
+    },
+    {
+      icon: <Gift className="h-8 w-8 text-[#ea4c89]" />,
+      title: "Programas de Fidelidad",
+      description: "Obtén recompensas y descuentos exclusivos.",
+    },
+  ];
+  const testimonios = [
+    {
+      mensaje:
+        "¡Me encanta este salón! Siempre salgo feliz con mi nuevo look y el sistema de citas es súper cómodo. ¡Adiós a las esperas y hola a un estilo perfecto!",
+      nombre: "Laura M.",
+    },
+    {
+      mensaje:
+        "El mejor sitio para mi coloración y manicura. Además, los recordatorios de cita son geniales, nunca se me olvida cuándo tengo que ir. ¡Profesionales y eficientes!",
+      nombre: "Javier R.",
+    },
+    {
+      mensaje:
+        "Siempre me atienden con profesionalidad y el ambiente es muy agradable. Reservar online es un plus que valoro mucho. ¡Mi salón de confianza!",
+      nombre: "Sofía L.",
+    },
+  ];
 
-  // Ejemplos de antes y después
-  const beforeAfterExamples = [
-    {
-      id: 1,
-      service: "Corte de Cabello",
-      before: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      after: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      description: "Transformación completa con corte moderno y estilizado",
-      rating: 5,
-      client: "María G.",
-    },
-    {
-      id: 2,
-      service: "Tratamiento Facial",
-      before: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      after: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      description: "Rejuvenecimiento facial con técnicas avanzadas",
-      rating: 5,
-      client: "Ana R.",
-    },
-    {
-      id: 3,
-      service: "Manicure Artístico",
-      before: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      after: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      description: "Diseño único y personalizado para cada cliente",
-      rating: 5,
-      client: "Carmen L.",
-    },
-    {
-      id: 4,
-      service: "Blanqueamiento Dental",
-      before: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      after: "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg?height=200&width=200",
-      description: "Sonrisa más blanca y brillante en una sola sesión",
-      rating: 5,
-      client: "Pedro M.",
-    },
-  ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <Calendar className="h-8 w-8 text-blue-600" />
-            <span className="text-2xl font-bold text-gray-900">AgendaFlow</span>
-          </div>
-          <div className="space-x-4">
-            <Button variant="ghost" asChild>
-              <a href="/Login">Iniciar Sesión</a>
-            </Button> 
-            <Button asChild>
-              <a href="/Register">Registrarse</a>
-            </Button>
-          </div>
+    <div className="flex flex-col min-h-[100dvh] bg-custom-background-light text-custom-text-dark">
+      <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-white shadow-sm border-b border-gray-200 px-6 flex items-center justify-between">
+
+        <Link to="/" className="flex items-center">
+          
+          <span className="ml-3 text-2xl font-extrabold text-[#1F1F1F]">AgendaFlow</span>
+        </Link>
+
+        {/* Menú móvil */}
+        <div className="ml-auto lg:hidden">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <Menu className="h-7 w-7 text-[#1F1F1F]" />
+                <span className="sr-only">Abrir menú</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="bg-[#FFF8FB]">
+              <Link to="/" className="flex items-center justify-center py-4">
+                <Scissors className="h-7 w-7 text-[#FF69B4]" />
+                <span className="ml-2 text-xl font-extrabold text-[#1F1F1F]">Tu Cita Fácil</span>
+              </Link>
+              <div className="grid gap-4 py-6">
+                {["Servicios", "Nosotros", "Testimonios", "Contacto"].map((item) => (
+                  <SheetClose asChild key={item}>
+                    <Link
+                      to="#"
+                      className="flex w-full items-center py-2 text-lg font-semibold text-[#1F1F1F] hover:text-[#FF69B4]"
+                    >
+                      {item}
+                    </Link>
+                  </SheetClose>
+                ))}
+                <SheetClose asChild>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-[#FF69B4] text-[#FF69B4] hover:bg-[#FF69B4]/10 w-full py-3 text-lg rounded-lg bg-transparent"
+                  >
+                    <Link to="/login">Iniciar Sesión</Link>
+                  </Button>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Button
+                    asChild
+                    className="bg-[#C71585] hover:bg-[#C71585]/90 text-white w-full py-3 text-lg rounded-lg"
+                  >
+                    <Link to="register">Registrarse</Link>
+                  </Button>
+                </SheetClose>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
+
+        {/* Navegación en pantallas grandes */}
+        <nav className="ml-auto hidden lg:flex gap-6 items-center">
+          {["Servicios", "Nosotros", "Testimonios", "Contacto"].map((item) => (
+            <Link
+              to="#"
+              key={item}
+              className="text-base font-medium hover:text-[#FF69B4] text-[#7A7A7A] transition-colors"
+            >
+              {item}
+            </Link>
+          ))}
+          <Button
+            asChild
+            variant="outline"
+            className="border-[#FF69B4] text-[#FF69B4] hover:bg-[#FF69B4]/10 text-base font-medium px-5 py-2 rounded-lg bg-transparent"
+          >
+            <Link to="#">Iniciar Sesión</Link>
+          </Button>
+          <Button
+            asChild
+            className="bg-[#C71585] hover:bg-[#C71585]/90 text-white text-base font-medium px-5 py-2 rounded-lg"
+          >
+            <Link to="#">Registrarse</Link>
+          </Button>
+        </nav>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Gestiona tus citas de manera <span className="text-blue-600">inteligente</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Plataforma completa para la gestión de citas con roles específicos para administradores, empleados y
-            clientes.
-          </p>
-          <div className="space-x-4">
-            <Button size="lg" asChild>
-              <a href="/Register">Comenzar Gratis</a>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <a href="Login">Ver Demo</a>
-            </Button>
-          </div>
-        </div>
-      </section>
+      <main>
+        <section className="w-full min-h-[calc(100vh-5rem)] bg-gradient-to-br from-[#FFF8F8] to-[#FFEFF5] py-16 md:py-24 lg:py-28 px-6 sm:px-8 mt-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-[1fr_550px] xl:grid-cols-[1fr_650px] gap-10 lg:gap-16 items-center">
 
-      {/* Calendario de Citas */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Citas Programadas</h2>
-            <p className="text-gray-600">Mantén un seguimiento en tiempo real de todas las citas</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Citas de Hoy */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Calendar className="h-5 w-5 mr-2 text-blue-600" />
-                  Citas de Hoy
-                </CardTitle>
-                <CardDescription>Agenda actualizada en tiempo real</CardDescription>
-              </CardHeader>
-              <CardContent>
+              {/* Texto */}
+              <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left space-y-6">
                 <div className="space-y-4">
-                  {upcomingAppointments
-                    .filter((apt) => apt.date === "Hoy")
-                    .map((appointment) => (
-                      <div key={appointment.id} className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <div className="flex flex-col">
-                            <span className="font-medium text-sm">{appointment.client}</span>
-                            <span className="text-xs text-gray-600">{appointment.service}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="text-right">
-                            <div className="text-sm font-medium">{appointment.time}</div>
-                            <div className="text-xs text-gray-600">{appointment.employee}</div>
-                          </div>
-                          <Badge variant={appointment.status === "confirmed" ? "default" : "secondary"}>
-                            {appointment.status === "confirmed" ? "Confirmada" : "Pendiente"}
-                          </Badge>
-                        </div>
-                      </div>
-                    ))}
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-extrabold tracking-tight text-[#1F1F1F] leading-tight">
+                    Tu Salón de Belleza: <br /> Reserva tu momento de estilo.
+                  </h1>
+                  <p className="max-w-[700px] text-[#7A7A7A] text-base sm:text-lg md:text-xl leading-relaxed">
+                    Reserva fácilmente tus tratamientos de cabello, uñas, maquillaje y más. Gestiona tus citas y luce
+                    siempre radiante con nuestra plataforma intuitiva y exclusiva para ti.
+                  </p>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Citas de Mañana */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Clock className="h-5 w-5 mr-2 text-green-600" />
-                  Próximas Citas
-                </CardTitle>
-                <CardDescription>Planificación para mañana</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {upcomingAppointments
-                    .filter((apt) => apt.date === "Mañana")
-                    .map((appointment) => (
-                      <div key={appointment.id} className="flex items-center justify-between p-3 border rounded-lg">
-                        <div className="flex items-center space-x-3">
-                          <div className="flex flex-col">
-                            <span className="font-medium text-sm">{appointment.client}</span>
-                            <span className="text-xs text-gray-600">{appointment.service}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <div className="text-right">
-                            <div className="text-sm font-medium">{appointment.time}</div>
-                            <div className="text-xs text-gray-600">{appointment.employee}</div>
-                          </div>
-                          <Badge variant="outline">Programada</Badge>
-                        </div>
-                      </div>
-                    ))}
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <Button
+                    asChild
+                    className="bg-[#FF69B4] hover:bg-[#FF69B4]/90 text-white px-10 py-5 text-base sm:text-lg rounded-xl shadow-lg transition-all duration-300 hover:scale-105"
+                  >
+                    <Link to="#">Reservar Ahora</Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="border-[#FF69B4] text-[#FF69B4] hover:bg-[#FF69B4]/10 px-10 py-5 text-base sm:text-lg bg-transparent rounded-xl shadow-md transition-all duration-300 hover:scale-105"
+                  >
+                    <Link to="#">Ver Servicios</Link>
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+
+              {/* Imagen oculta en móviles */}
+              <div className="hidden lg:block">
+                <img
+                  src="https://impulsapopular.com/wp-content/uploads/2019/06/4504-Pasos-para-abrir-un-sal%C3%B3n-de-belleza.jpg?"
+                  alt="Interior de un moderno salón de belleza con sillas de peluquería y espejos."
+                  className="rounded-2xl object-cover max-h-[500px] w-full shadow-2xl aspect-video lg:aspect-square"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-full min-h-screen bg-[#fef7fb] py-10 px-4 flex flex-col justify-center">
+          <div className="max-w-6xl mx-auto text-center mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-2">
+              Nuestros Servicios de Belleza
+            </h2>
+            <p className="text-sm sm:text-base text-[#5f5f5f] max-w-2xl mx-auto">
+              Ofrecemos una amplia gama de servicios para realzar tu belleza y bienestar, con la calidad que mereces.
+            </p>
           </div>
 
-          <div className="text-center mt-8">
-            <Button asChild>
-              <a href="/Login">
-                Ver Calendario Completo
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Antes y Después */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Resultados Increíbles</h2>
-            <p className="text-gray-600">Mira las transformaciones que nuestros profesionales logran</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {beforeAfterExamples.map((example) => (
-              <Card key={example.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <CardContent className="p-0">
-                  <div className="relative">
-                    {/* Antes */}
-                    <div className="relative">
-                      <img
-                        src={example.before || "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg"}
-                        alt="Antes"
-                        className="w-full h-32 object-cover"
-                      />
-                      <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">
-                        ANTES
-                      </div>
-                    </div>
-
-                    {/* Después */}
-                    <div className="relative">
-                      <img
-                        src={example.after || "https://mbblancabelzunce.com/wp-content/uploads/2024/05/360_F_419176802_9s4AoYMfzxDt3kaSYV55whCkTB76NsHN.jpg"}
-                        alt="Después"
-                        className="w-full h-32 object-cover"
-                      />
-                      <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
-                        DESPUÉS
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4">
-                    <h3 className="font-semibold text-sm mb-2">{example.service}</h3>
-                    <p className="text-xs text-gray-600 mb-3">{example.description}</p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        {[...Array(example.rating)].map((_, i) => (
-                          <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-500">- {example.client}</span>
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto w-full">
+            {servicios.map((item, index) => (
+              <Card
+                key={index}
+                className="flex flex-col items-center text-center px-4 py-5 rounded-xl shadow-sm border bg-white hover:shadow-md transition-all"
+              >
+                <div className="mb-3">{item.icon}</div>
+                <CardHeader className="p-0 mb-1 w-full flex justify-center">
+                  <CardTitle className="text-base font-semibold text-[#1a1a1a] text-center">
+                    {item.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0 text-xs text-[#5f5f5f]">
+                  <p>{item.description}</p>
                 </CardContent>
               </Card>
             ))}
           </div>
+        </section>
 
-          <div className="text-center mt-8">
-            <Button variant="outline" asChild>
-              <a href="/Register">
-                Ver Más Transformaciones
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
+        <section className="w-full py-20 bg-[#f8f3f7]">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#1a1a1a] mb-3">
+                Lo que dicen nuestros clientes
+              </h2>
+              <p className="text-[#5f5f5f] max-w-xl mx-auto text-sm sm:text-base">
+                La satisfacción de nuestros clientes es nuestra mejor carta de presentación.
+              </p>
+            </div>
 
-      {/* Features */}
-      <section className="py-16 px-4 bg-white">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Características Principales</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card>
-              <CardHeader>
-                <Shield className="h-12 w-12 text-blue-600 mb-4" />
-                <CardTitle>Roles y Permisos</CardTitle>
-                <CardDescription>Sistema completo de roles para administradores, empleados y clientes</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <Clock className="h-12 w-12 text-green-600 mb-4" />
-                <CardTitle>Gestión en Tiempo Real</CardTitle>
-                <CardDescription>Programación y seguimiento de citas en tiempo real</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card>
-              <CardHeader>
-                <Users className="h-12 w-12 text-purple-600 mb-4" />
-                <CardTitle>Multi-usuario</CardTitle>
-                <CardDescription>Soporte para múltiples empresas y clientes en una sola plataforma</CardDescription>
-              </CardHeader>
-            </Card>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {testimonios.map((t, idx) => (
+                <Card key={idx} className="p-6 rounded-xl shadow-md bg-white border border-gray-100">
+                  <CardContent className="flex flex-col items-center text-center">
+                    <div className="flex items-center mb-3">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+                      ))}
+                    </div>
+                    <p className="italic text-sm text-[#333] mb-4">{`"${t.mensaje}"`}</p>
+                    <div className="flex items-center space-x-3">
+                      <img
+                        src="https://impulsapopular.com/wp-content/uploads/2019/06/4504-Pasos-para-abrir-un-sal%C3%B3n-de-belleza.jpg?"
+                        alt="Avatar"
+                        width={50}
+                        height={50}
+                        className="rounded-full object-cover"
+                      />
+                      <div className="font-semibold text-sm text-[#1a1a1a]">{t.nombre}</div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Roles Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Roles del Sistema</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-2 border-red-200">
-              <CardHeader>
-                <CardTitle className="text-red-600">Administrador</CardTitle>
-                <CardDescription>Control total del sistema</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Gestión de usuarios
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Configuración del sistema
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Reportes avanzados
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Gestión de empresas
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="border-2 border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-blue-600">Empleado</CardTitle>
-                <CardDescription>Gestión de servicios</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Gestión de citas
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Calendario personal
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Gestión de servicios
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Reportes de trabajo
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-            <Card className="border-2 border-green-200">
-              <CardHeader>
-                <CardTitle className="text-green-600">Cliente</CardTitle>
-                <CardDescription>Reserva y gestión de citas</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Reservar citas
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Ver historial
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Cancelar citas
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    Calificar servicios
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+        <section className="w-full min-h-[100vh] py-20 bg-white border-t border-gray-200 flex items-center">
+          <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center gap-10">
+            <div className="space-y-4 max-w-3xl">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 leading-tight">
+                ¿Listo para transformar tu estilo?
+              </h2>
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                Agenda tu próxima cita con nosotros y descubre la diferencia de un servicio excepcional y una
+                experiencia sin igual.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button
+                asChild
+                className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-5 text-base sm:text-lg rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+              >
+                <Link to="/reservar">Reservar Mi Cita</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="border-pink-600 text-pink-600 hover:bg-pink-50 px-8 py-5 text-base sm:text-lg rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+              >
+                <Link to="/conocenos">Conocernos Mejor</Link>
+              </Button>
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <Calendar className="h-8 w-8" />
-            <span className="text-2xl font-bold">CitasPro</span>
-          </div>
-          <p className="text-gray-400">© 2024 CitasPro. Todos los derechos reservados.</p>
-        </div>
+        </section>
+      </main>
+      <footer className="flex flex-col gap-3 sm:flex-row py-8 w-full shrink-0 items-center px-4 md:px-6 border-t border-gray-100 bg-[#f9f9f9] text-[#666]">
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} Tu Cita Fácil. Todos los derechos reservados.
+        </p>
+        <nav className="sm:ml-auto flex gap-5 sm:gap-7">
+          <Link to="/terminos" className="text-sm hover:underline underline-offset-4">
+            Términos de Servicio
+          </Link>
+          <Link to="/privacidad" className="text-sm hover:underline underline-offset-4">
+            Privacidad
+          </Link>
+        </nav>
       </footer>
+
     </div>
   )
 }

@@ -56,7 +56,7 @@ export default function LoginPage() {
         <CardHeader className="space-y-1">
           <div className="flex items-center justify-center mb-4">
             <Calendar className="h-8 w-8 text-blue-600 mr-2" />
-            <span className="text-2xl font-bold">CitasPro</span>
+            <span className="text-2xl font-bold">AgendaFlow</span>
           </div>
           <CardTitle className="text-2xl text-center">Iniciar Sesión</CardTitle>
           <CardDescription className="text-center">Ingresa tus credenciales para acceder al sistema</CardDescription>

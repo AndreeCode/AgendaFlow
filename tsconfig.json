@@ -5,6 +5,8 @@
       "@/*": ["resources/js/*"]
     },
     "jsx": "react-jsx",
-    "lib":["dom","esnext"]
-  }
+    "lib":["dom","esnext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+  },
 }
