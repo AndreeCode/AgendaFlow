@@ -47,6 +47,8 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupConte
 import { cn } from "@/lib/utils"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
 import { Separator } from "@radix-ui/react-separator"
+import Config from "@/Config"
+import AuthUser from "@/Auth/AuthUser"
 export default function ClientPage() {
   const [activeSection, setActiveSection] = useState("overview")
   const [bookDate, setBookDate] = useState<Date | undefined>(undefined)
@@ -54,7 +56,7 @@ export default function ClientPage() {
   const [bookStylist, setBookStylist] = useState("")
   const [bookTime, setBookTime] = useState("")
   const [isBookModalOpen, setIsBookModalOpen] = useState(false)
-
+  const {getLogout, getToken}=AuthUser();
   const handleBookAppointment = (e: React.FormEvent) => {
     e.preventDefault()
     console.log({ date: bookDate, service: bookService, stylist: bookStylist, time: bookTime })
@@ -143,6 +145,38 @@ export default function ClientPage() {
     { title: "Reservar Cita", section: "book", icon: PlusCircleIcon },
     { title: "Mi Perfil", section: "profile", icon: UserIcon },
   ]
+  const handleLogout = () => {
+        Config.getLogout().then(response=>{
+          getLogout();
+        });
+      }
+      const renderLinks =()=>{
+        if(getToken()){
+          return (
+            <>
+               
+                    <SidebarMenuButton onClick={handleLogout}
+            style={{
+              color: '#1F2937',
+              transition: 'background-color 0.2s, color 0.2s',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#FEE2E2';
+              e.currentTarget.style.color = '#DC2626';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+              e.currentTarget.style.color = '#1F2937';
+            }}
+          >
+            <LogOutIcon className="mr-2 h-5 w-5" />
+            <span>Cerrar sesión</span>
+          </SidebarMenuButton>
+              
+            </>
+          );
+        }
+      }
 
   return (
     <SidebarProvider>
@@ -203,29 +237,7 @@ export default function ClientPage() {
     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.title}>
-          <SidebarMenuButton
-            isActive={activeSection === item.section}
-            onClick={() => setActiveSection(item.section)}
-            style={{
-              color: '#1F2937', // Gris oscuro base
-              display: 'flex',
-              alignItems: 'center',
-              padding: '0.5rem 1rem',
-              borderRadius: '0.375rem',
-              transition: 'background-color 0.2s, color 0.2s',
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#FCE4EC'; // Rosa claro (hover)
-              e.currentTarget.style.color = '#E91E63';           // Rosa vibrante
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1F2937';
-            }}
-          >
-            <item.icon className="mr-2 h-5 w-5" />
-            <span>{item.title}</span>
-          </SidebarMenuButton>
+          {renderLinks()}
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
@@ -239,25 +251,7 @@ export default function ClientPage() {
   <SidebarGroup>
     <SidebarGroupContent>
       <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            style={{
-              color: '#1F2937',
-              transition: 'background-color 0.2s, color 0.2s',
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#FEE2E2';
-              e.currentTarget.style.color = '#DC2626';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = 'transparent';
-              e.currentTarget.style.color = '#1F2937';
-            }}
-          >
-            <LogOutIcon className="mr-2 h-5 w-5" />
-            <span>Cerrar sesión</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
+        {renderLinks()}
       </SidebarMenu>
     </SidebarGroupContent>
   </SidebarGroup>
